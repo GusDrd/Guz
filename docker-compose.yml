@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  chatbot-api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - TOKEN_KEY=${TOKEN_KEY}
+    volumes:
+      - .:/app
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"

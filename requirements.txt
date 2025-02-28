@@ -1,0 +1,15 @@
+fastapi==0.115.8
+jq==1.8.0
+langchain==0.3.19
+langchain_community==0.3.17
+langchain_core==0.3.35
+langchain_openai==0.3.6
+langchain_text_splitters==0.3.6
+langgraph==0.2.73
+pydantic==2.10.6
+pyjwt==2.10.1
+pypdf==5.3.0
+python-dotenv==1.0.1
+redis==5.2.1
+slowapi==0.1.9
+uvicorn==0.34.0
