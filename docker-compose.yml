@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   chatbot-api:
+    restart: unless-stopped
     build: .
     ports:
       - "8000:8000"
@@ -11,5 +12,6 @@ services:
       - .:/app
   redis:
     image: redis
-    ports:
-      - "6379:6379"
+    restart: unless-stopped
+    expose:
+      - "6379"

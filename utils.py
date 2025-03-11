@@ -6,6 +6,7 @@ from langchain_openai import OpenAIEmbeddings
 from fastapi import HTTPException, Header
 from langchain_core.tools import tool
 from dotenv import load_dotenv
+from fastapi import Request
 import datetime
 import jwt
 import os
@@ -117,3 +118,14 @@ def validate_jwt(token: str = Header(None)):
         raise HTTPException(status_code=401, detail="Token expired")
     except jwt.InvalidTokenError:
         raise HTTPException(status_code=401, detail="Invalid token")
+
+
+# ------------------------------------------
+# ========== REQUEST IP RETRIEVAL ==========
+# ------------------------------------------
+def ip_key_func(request: Request):
+    """Extracts the correct IP address from headers."""
+    forwarded = request.headers.get("X-Forwarded-For")
+    if forwarded:
+        return forwarded.split(",")[0]  # First IP in the list is the real client IP
+    return request.client.host  # Fallback if no proxy is used

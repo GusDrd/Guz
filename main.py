@@ -1,4 +1,4 @@
-from utils import serialize_message, deserialize_message, generate_jwt, validate_jwt
+from utils import serialize_message, deserialize_message, generate_jwt, validate_jwt, ip_key_func
 from langchain_core.messages import HumanMessage, SystemMessage, AIMessage
 from langgraph.graph import MessagesState, StateGraph
 from RAG import query_or_respond, tools, generate
@@ -19,10 +19,9 @@ redis_client = redis.StrictRedis(host='redis', port=6379, db=0, decode_responses
 
 # ----- FastAPI Setup -----
 app = FastAPI()
-limiter = Limiter(key_func=get_remote_address, storage_uri="redis://redis:6379/0")
+limiter = Limiter(key_func=ip_key_func, storage_uri="redis://redis:6379/0")
 app.state.limiter = limiter
 app.add_exception_handler(429, _rate_limit_exceeded_handler)
-
 
 # ----- Graph Structure -----
 graph_builder = StateGraph(MessagesState)
